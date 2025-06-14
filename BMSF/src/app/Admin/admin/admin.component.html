@@ -1,0 +1,52 @@
+<div class="sticky-header position-sticky top-0 text-center bg-white z-3 border-bottom p-1">
+    <h1 class="p-1">Sticky Header</h1>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2 bg-dark text-white vh-100">
+        <div class="sticky-sidebar p-3">
+          <p class="menu-item" (click)="getAReqs()">Get Author Requests</p>
+         <p class ="menu-item" (click)="getUReqs()">Get User Requests</p>
+         <p class="menu-item" (click)="show = false">Home</p>
+        </div>
+      </div>
+
+      <div class="col p-2 " >
+        <div *ngIf="show==false">
+        <app-book></app-book>
+      </div>
+      <div *ngIf="show==true && Areq ">
+    <h2>Author Requests</h2>
+    <div class="container-fluid">
+
+    <div class="row " *ngFor="let req of Areq">
+      <div class="col-3">{{ req.name }}</div>
+      <div class="col-3">Approval pending</div>
+      <div class="col-2">
+        <button class="btn btn-success btn-sm" (click)="AppAReq(req.id)">Approve </button>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div *ngIf="show==true && Ureq.length > 0">
+    <h2>User Requests</h2>
+    <div class="container-fluid">
+  <div class="row " *ngFor="let req of Ureq">
+    <div class="col-3">{{ req.cUname }}</div>
+    <div class="col-2">{{ req.bookTitle }}</div>
+    <div class="col-2">{{ req.authName }}</div>
+    <div class="col-2">{{ req.status }}</div>
+    <div class="col-3">
+      <button class="btn btn-success btn-sm" (click)="AppUserReq(req.uId, req.bId)">
+        Approve
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+      </div>
+      
+      <div class="footer  text-white text-center py-2 fixed-bottom">foot</div>
+    </div>
+  </div>

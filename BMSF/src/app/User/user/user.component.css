@@ -1,0 +1,13 @@
+.sticky-sidebar {
+      position: sticky;
+      top: 50px; 
+    }
+    .sticky-header {
+      height: 50px;
+    }
+    .footer{
+      background-color: pink;
+    }
+    p.menu-item {
+      cursor: pointer;
+    }

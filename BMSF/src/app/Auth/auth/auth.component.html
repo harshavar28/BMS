@@ -1,0 +1,84 @@
+<div class="container mt-5">
+  <div class="card p-4" *ngIf="show == false">
+
+    <div *ngIf="change == false">
+        <h1 class="mb-4 text-center">Login user</h1>
+      <form (ngSubmit)="loginU()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" [(ngModel)]="cred.uname" name="name" class="form-control" placeholder="Name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" [(ngModel)]="cred.password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+      </form>
+
+      <button (click)="changef()" class="btn btn-outline-secondary w-100">Login as Author</button>
+    </div>
+
+    <div *ngIf="change == true">
+        <h1 class="mb-4 text-center">Login</h1>
+      <form (ngSubmit)="loginA()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" [(ngModel)]="cred.uname" name="name" class="form-control" placeholder="Name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" [(ngModel)]="cred.password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+      </form>
+
+      <button (click)="changef()" class="btn btn-outline-secondary w-100">Login as User</button>
+    </div>
+  </div>
+
+  <div class="card p-4 mt-4" *ngIf="show == true">
+    <h1 class="mb-4 text-center">Register</h1>
+
+    <div *ngIf="change == true">
+      <form (ngSubmit)="registerU()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" [(ngModel)]="cred.uname" name="name" class="form-control" placeholder="Name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" [(ngModel)]="cred.password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 mb-2">Register</button>
+      </form>
+
+      <button (click)="changef()" class="btn btn-outline-secondary w-100">Register as Author</button>
+    </div>
+
+    <div *ngIf="change == false">
+      <form (ngSubmit)="registerA()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" [(ngModel)]="cred.uname" name="name" class="form-control" placeholder="Name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" [(ngModel)]="cred.password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 mb-2">Register</button>
+      </form>
+
+      <button (click)="changef()" class="btn btn-outline-secondary w-100">Register as User</button>
+    </div>
+  </div>
+  <button (click)="toogle()" class="btn btn-secondary w-100 mt-4">{{ show ? 'Hide Register' : 'Show Register' }}</button>
+</div>
+

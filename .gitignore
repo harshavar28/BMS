@@ -1,0 +1,14 @@
+# Backend ignores
+/BMSB/bin/
+/BMSB/obj/
+/BMSB/.vs/
+
+# Frontend ignores
+/BMSF/node_modules/
+/BMSF/dist/
+/BMSF/.angular/
+
+# Global ignores
+*.log
+.DS_Store
+Thumbs.db

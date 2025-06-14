@@ -1,0 +1,13 @@
+<h1>Book Details</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let book of books">
+      <div class="card p-2">
+          <h5 class="card-title">{{ book.title }}</h5>
+          <p class="card-text">Author: {{ book.author }}</p>
+          <p class="card-text">Category: {{ book.category }}</p>
+          <button class="btn btn-primary w-100" (click)="addToCart(book.id)">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

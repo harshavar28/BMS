@@ -1,0 +1,6 @@
+@BMSB_HostAddress = http://localhost:5241
+
+GET {{BMSB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
