@@ -2,28 +2,19 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')  
-        DOCKERHUB_USER = 'harshavar28'
-        FRONTEND_IMAGE = "${DOCKERHUB_USER}/prj5-frontend"
-        BACKEND_IMAGE  = "${DOCKERHUB_USER}/prj5-backend"
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-creds') // Add this in Jenkins Credentials
+        BACKEND_IMAGE = 'harshavar28/prj5-backend'
+        FRONTEND_IMAGE = 'harshavar28/prj5-frontend'
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/harshavar28/BMS'
             }
         }
 
-        stage('Build Frontend Image') {
-            steps {
-                script {
-                    sh 'docker build -t $FRONTEND_IMAGE -f BMSF/Dockerfile .'
-                }
-            }
-        }
-
-        stage('Build Backend Image') {
+        stage('Build Backend') {
             steps {
                 script {
                     sh 'docker build -t $BACKEND_IMAGE -f BMSB/Dockerfile .'
@@ -31,27 +22,27 @@ pipeline {
             }
         }
 
+        stage('Build Frontend') {
+            steps {
+                script {
+                    sh 'docker build -t $FRONTEND_IMAGE -f BMSF/Dockerfile .'
+                }
+            }
+        }
+
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_USER --password-stdin'
+                    sh "echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
 
-        stage('Push Images to Docker Hub') {
+        stage('Push Images') {
             steps {
-                script {
-                    sh 'docker push $FRONTEND_IMAGE'
-                    sh 'docker push $BACKEND_IMAGE'
-                }
+                sh 'docker push $BACKEND_IMAGE'
+                sh 'docker push $FRONTEND_IMAGE'
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker logout'
         }
     }
 }
