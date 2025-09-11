@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')  // Set this in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')  
         DOCKERHUB_USER = 'harshavar28'
         FRONTEND_IMAGE = "${DOCKERHUB_USER}/prj5-frontend"
         BACKEND_IMAGE  = "${DOCKERHUB_USER}/prj5-backend"
@@ -18,7 +18,7 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 script {
-                    docker.build(FRONTEND_IMAGE, '-f BMSF/Dockerfile .')
+                    sh 'docker build -t $FRONTEND_IMAGE -f BMSF/Dockerfile .'
                 }
             }
         }
@@ -26,15 +26,15 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 script {
-                    docker.build(BACKEND_IMAGE, '-f BMSB/Dockerfile .')
+                    sh 'docker build -t $BACKEND_IMAGE -f BMSB/Dockerfile .'
                 }
             }
         }
 
-        stage('Docker Hub Login') {
+        stage('Login to Docker Hub') {
             steps {
                 script {
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_USER} --password-stdin"
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_USER --password-stdin'
                 }
             }
         }
@@ -42,8 +42,8 @@ pipeline {
         stage('Push Images to Docker Hub') {
             steps {
                 script {
-                    docker.image(FRONTEND_IMAGE).push('latest')
-                    docker.image(BACKEND_IMAGE).push('latest')
+                    sh 'docker push $FRONTEND_IMAGE'
+                    sh 'docker push $BACKEND_IMAGE'
                 }
             }
         }
