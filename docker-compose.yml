@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: BMSB/Dockerfile
+    ports:
+      - "7065:80"
+    networks:
+      - bmsnet
+
+  frontend:
+    build:
+      context: .
+      dockerfile: BMSF/Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - bmsnet
+
+networks:
+  bmsnet:
