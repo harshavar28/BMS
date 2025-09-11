@@ -13,7 +13,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/your-repo.git'  // Replace with your repo
+                git 'https://github.com/harshavar28/BMS'  // Replace with your repo
             }
         }
 
