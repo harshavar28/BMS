@@ -8,6 +8,12 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build Backend') {
             steps {
                 sh 'docker build -t $BACKEND_IMAGE -f BMSB/Dockerfile .'
