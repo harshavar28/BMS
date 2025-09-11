@@ -7,13 +7,13 @@ pipeline {
         FRONTEND_IMAGE = 'harshavar28/prj5-frontend'
     }
 
-    stage('Checkout') {
-  steps {
-    git branch: 'main', url: 'https://github.com/harshavar28/BMS.git'
-  }
-}
+    stages {   // <-- stages block opened here
 
-        
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/harshavar28/BMS.git'
+            }
+        }
 
         stage('Build Backend') {
             steps {
@@ -39,5 +39,5 @@ pipeline {
                 sh 'docker push $FRONTEND_IMAGE'
             }
         }
-    }
+    }  // <-- stages block closed here
 }
