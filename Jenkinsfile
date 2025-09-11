@@ -5,7 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds'   // Jenkins credentials ID
         DOCKERHUB_USERNAME = 'harshavar28'
         BACKEND_IMAGE = 'harshavar28/prj5-backend'
-        FRONTEND_IMAGE = 'harshavar28/prj5-frontend'
+        FRONTEND_IMAGE = 'harshavar28/prj5-frontnend'
     }
 
     stages {
