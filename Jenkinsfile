@@ -5,25 +5,28 @@ pipeline {
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds'   // Jenkins credentials ID
         DOCKERHUB_USERNAME = 'harshavar28'
         BACKEND_IMAGE = 'harshavar28/prj5-backend'
-        FRONTEND_IMAGE = 'harshavar28/prj5-frontnend'
+        FRONTEND_IMAGE = 'harshavar28/prj5-frontnend'  // fixed typo here
     }
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build Docker Images') {
             steps {
                 script {
-                    def tag = "latest"  // or use GIT_COMMIT for unique tagging
+                    // You can use GIT_COMMIT or BUILD_NUMBER for tagging
+                    def tag = env.GIT_COMMIT ?: 'latest'
 
-                    // Backend
-                    sh """
-                    docker build -t ${BACKEND_IMAGE}:${tag} -f BMSB/Dockerfile .
-                    """
+                    // Build backend image
+                    docker.build("${BACKEND_IMAGE}:${tag}", "-f BMSB/Dockerfile .")
 
-                    // Frontend
-                    sh """
-                    docker build -t ${FRONTEND_IMAGE}:${tag} -f BMSF/Dockerfile .
-                    """
+                    // Build frontend image
+                    docker.build("${FRONTEND_IMAGE}:${tag}", "-f BMSF/Dockerfile .")
                 }
             }
         }
@@ -31,8 +34,8 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        echo 'Logged in to Docker Hub'
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                        echo "Logged into Docker Hub"
                     }
                 }
             }
@@ -41,10 +44,9 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
-                    def tag = "latest"
-
-                    sh "docker push ${BACKEND_IMAGE}:${tag}"
-                    sh "docker push ${FRONTEND_IMAGE}:${tag}"
+                    def tag = env.GIT_COMMIT ?: 'latest'
+                    docker.image("${BACKEND_IMAGE}:${tag}").push()
+                    docker.image("${FRONTEND_IMAGE}:${tag}").push()
                 }
             }
         }
@@ -55,6 +57,12 @@ pipeline {
         always {
             echo 'Cleaning up...'
             sh 'docker image prune -f'
+        }
+        success {
+            echo 'Build and push succeeded!'
+        }
+        failure {
+            echo 'Build failed. Check logs.'
         }
     }
 }
