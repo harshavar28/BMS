@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Docker Hub credentials (configured in Jenkins)
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds'   // Jenkins credentials ID
         DOCKERHUB_USERNAME = 'harshavar28'
         BACKEND_IMAGE = 'harshavar28/prj5-backend'
@@ -11,16 +10,10 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/harshavar28/BMS'  // Replace with your repo
-            }
-        }
-
         stage('Build Docker Images') {
             steps {
                 script {
-                    def tag = "latest"  // You can change this to something like GIT_COMMIT
+                    def tag = "latest"  // or use GIT_COMMIT for unique tagging
 
                     // Backend
                     sh """
