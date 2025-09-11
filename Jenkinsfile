@@ -7,13 +7,11 @@ pipeline {
         FRONTEND_IMAGE = 'harshavar28/prj5-frontend'
     }
 
-    stages {   // <-- stages block opened here
-
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/harshavar28/BMS.git'
-            }
+    stage('Checkout') {
+        steps {
+            checkout scm
         }
+    }
 
         stage('Build Backend') {
             steps {
