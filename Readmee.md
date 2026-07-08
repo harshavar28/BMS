@@ -1,3 +1,3 @@
 # BMS
 
-My first Git workflow practice. Dev2 gelka,,,.
+My first Git workflow practice. Dev1 gelka,,,.
